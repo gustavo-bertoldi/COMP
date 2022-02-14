@@ -27,3 +27,12 @@ class Entier : public Symbole {
       int valeur;
 };
 
+class Openpar : public Symbole {
+    public:
+      Openpar() : Symbole(OPENPAR) { };
+      ~Openpar() { };
+      virtual void Affiche();
+   protected:
+      int valeur;
+};
+
