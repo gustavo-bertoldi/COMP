@@ -71,7 +71,10 @@ class Erreur : public Symbole {
 
 class Expr : public Symbole {
    public:
-      Expr() : Symbole(EXPR) { };
+      Expr(int v) : Symbole(EXPR), valeur(v) { };
       ~Expr() { };
       virtual void Affiche();
+
+   protected:
+      int valeur;
 };
