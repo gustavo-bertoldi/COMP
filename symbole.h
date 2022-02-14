@@ -32,7 +32,41 @@ class Openpar : public Symbole {
       Openpar() : Symbole(OPENPAR) { };
       ~Openpar() { };
       virtual void Affiche();
-   protected:
-      int valeur;
 };
+
+class Closepar : public Symbole {
+    public:
+      Closepar() : Symbole(CLOSEPAR) { };
+      ~Closepar() { };
+      virtual void Affiche();
+};
+
+class Plus : public Symbole {
+    public:
+      Plus() : Symbole(PLUS) { };
+      ~Plus() { };
+      virtual void Affiche();
+};
+
+class Mult : public Symbole {
+    public:
+      Mult() : Symbole(MULT) { };
+      ~Mult() { };
+      virtual void Affiche();
+};
+
+class Fin : public Symbole {
+    public:
+      Fin() : Symbole(FIN) { };
+      ~Fin() { };
+      virtual void Affiche();
+};
+
+class Erreur : public Symbole {
+    public:
+      Erreur() : Symbole(ERREUR) { };
+      ~Erreur() { };
+      virtual void Affiche();
+};
+
 
