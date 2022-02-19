@@ -1,10 +1,10 @@
 #pragma once
 
 #include <string>
-#include "symbole.h"
-#include "etat.h"
 #include <stack>
+#include "symbole.h"
 #include "lexer.h"
+#include "etat.h"
 using namespace std;
 
 class Automate {

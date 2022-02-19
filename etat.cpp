@@ -1,4 +1,4 @@
-#include "etat.h"
+#include "automate.h"
 
 bool E0::transition(Automate & automate, Symbole * s) {
     switch (*s){

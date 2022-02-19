@@ -5,7 +5,7 @@ void Automate::decalage(Symbole *s, Etat *e) {
     symboles.push(s);
     etats.push(e);
 
-    if (s -> isTerminal()) lexer -> Avancer();
+    //if (s -> isTerminal()) lexer -> Avancer();
 }
 
 void Automate::reduction(int n, Symbole *s) {
@@ -23,8 +23,7 @@ void Automate::reduction(int n, Symbole *s) {
         Symbole courant = *(evaluer.front());
         switch (courant)
         {
-        case :
-      
+        case OPENPAR:
             break;
         
         default:
@@ -32,6 +31,6 @@ void Automate::reduction(int n, Symbole *s) {
         }
     }
 
-    symboles.push(new Expr());
+    symboles.push(new Symbole(EXPR));
     etats.top() -> transition(*this, s);
 }
