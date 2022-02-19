@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "automate.h"
 #include "symbole.h"
 #include "etat.h"
 #include <stack>
