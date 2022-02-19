@@ -11,7 +11,7 @@ class Etat {
       Etat(string n) : name(n) { };
       virtual ~Etat();
 
-      virtual bool transition(Automate & automate, Symbole * s) = 0;
+      virtual bool transition(Automate &automate, Symbole * s) = 0;
 
    protected:
       string name;

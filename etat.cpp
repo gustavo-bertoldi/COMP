@@ -1,7 +1,6 @@
 #include "etat.h"
-#include "symbole.h"
 
-bool E0 :: transition(Automate & automate, Symbole * s) {
+bool E0::transition(Automate & automate, Symbole * s) {
     switch (*s){
         case EXPR:
             automate.decalage(s,new E1);
