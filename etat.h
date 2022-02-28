@@ -19,7 +19,7 @@ class Etat {
 
 class E0 : public Etat{
     public:
-      E0(){};
+      E0() {};
       virtual ~E0();
       virtual bool transition(Automate & automate, Symbole * s);
 };
