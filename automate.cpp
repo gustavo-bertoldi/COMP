@@ -1,11 +1,10 @@
 #include "automate.h"
 #include <queue>
+#include <algorithm>
 
 void Automate::decalage(Symbole *s, Etat *e) {
     symboles.push(s);
     etats.push(e);
-
-    //if (s -> isTerminal()) lexer -> Avancer();
 }
 
 void Automate::reduction(int n, Symbole *s) {
@@ -18,17 +17,14 @@ void Automate::reduction(int n, Symbole *s) {
         etats.pop();
     }
 
-    // Verifier comment gerer les valeurs gauche
+    Symbole * val;
+    if (n == 1) {
+        val = evaluer.back();
+    }
+
     while (!evaluer.empty()) {
-        Symbole courant = *(evaluer.front());
-        switch (courant)
-        {
-        case OPENPAR:
-            break;
-        
-        default:
-            break;
-        }
+        Symbole * courant = evaluer.front();
+
     }
 
     symboles.push(new Symbole(EXPR));
