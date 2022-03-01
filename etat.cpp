@@ -27,7 +27,6 @@ bool E1 :: transition(Automate & automate, Symbole * s) {
         case MULT:
             automate.decalage(s,new E5);
             break;
-        case INT:
         case FIN:
             return true;
             break;
@@ -56,31 +55,31 @@ bool E2 :: transition(Automate & automate, Symbole * s) {
 
 bool E3 :: transition(Automate & automate, Symbole * s) {
     int val;
-    Entier * e = nullptr;
+    Expr* e = nullptr;
     switch (*s){
         case CLOSEPAR:
-            e = (Entier *) automate.dernierSymbole(); 
+            e = (Expr *) automate.dernierSymbole(); 
             val = e->getValeur();
             automate.enleverSymbole();
-            automate.reduction(1,new Entier(val));
+            automate.reduction(1,new Expr(val));
             break; 
         case PLUS:
-            e = (Entier *) automate.dernierSymbole(); 
+            e = (Expr *) automate.dernierSymbole(); 
             val = e->getValeur();
             automate.enleverSymbole();
-            automate.reduction(1,new Entier(val));
+            automate.reduction(1,new Expr(val));
             break;
         case MULT:
-            e = (Entier *) automate.dernierSymbole(); 
+            e = (Expr *) automate.dernierSymbole(); 
             val = e->getValeur();
             automate.enleverSymbole();
-            automate.reduction(1,new Entier(val));
+            automate.reduction(1,new Expr(val));
             break;
         case FIN:
-            e = (Entier *) automate.dernierSymbole(); 
+            e = (Expr *) automate.dernierSymbole(); 
             val = e->getValeur();
             automate.enleverSymbole();
-            automate.reduction(1,new Entier(val));
+            automate.reduction(1,new Expr(val));
             break;
         default:
             break;

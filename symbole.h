@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -75,9 +75,11 @@ class Expr : public Symbole {
    public:
       Expr(int v) : Symbole(EXPR), valeur(v) { };
       ~Expr() { };
+      virtual void Affiche(){
+         cout<<"Expr = "<< valeur<< endl;
+      };
       int getValeur(){ return valeur;}
-      virtual void Affiche(){};
-
+      
    protected:
       int valeur;
 };

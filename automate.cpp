@@ -14,10 +14,11 @@ void Automate::evaluerChaine(){
   Symbole * s = nullptr;
 
   while( * (s = lexer->Consulter()) != FIN ) {
-      s -> Affiche();
+      //s -> Affiche();
       cout << endl;
       lexer->Avancer();
       etats.top()->transition(*this, s);
+
    }
 
   if (*symboles.top() != ERREUR) {
@@ -71,6 +72,7 @@ void Automate::reduction(int n,Symbole * s) {
     etats.top()->transition(*this,s);
     cout<<"Reduction"<<endl;
     s->Affiche();
+    lexer->Avancer();
  }
 
 Symbole * Automate::dernierSymbole(){
