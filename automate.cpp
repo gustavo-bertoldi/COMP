@@ -11,15 +11,16 @@ Automate::Automate(string chaine) {
 }
 
 void Automate::evaluerChaine(){
-  bool prochainEtat = true;
+  Symbole * s = nullptr;
 
-  while (prochainEtat) {
-    Symbole *s = lexer->Consulter();
-    lexer->Avancer();
-    prochainEtat = etats.top()->transition(*this, s);
-  }
+  while( * (s = lexer->Consulter()) != FIN ) {
+      s -> Affiche();
+      cout << endl;
+      lexer->Avancer();
+      etats.top()->transition(*this, s);
+   }
+
   if (*symboles.top() != ERREUR) {
-
     Expr *  e = (Expr *)symboles.top();
     int resultat = e->getValeur();
     cout << "Syntaxe correct" << endl << "Résultat : " << resultat << endl;
@@ -34,6 +35,8 @@ void Automate::evaluerChaine(){
 void Automate::decalage(Symbole *s, Etat *e) {
     symboles.push(s);
     etats.push(e);
+    cout<<"Decalage"<<endl;
+    s->Affiche();
 }
 
 /*void Automate::reduction(int n, Symbole *s) {
@@ -66,6 +69,8 @@ void Automate::reduction(int n,Symbole * s) {
     }
     //coloca a expressao calculada no topo da pilha
     etats.top()->transition(*this,s);
+    cout<<"Reduction"<<endl;
+    s->Affiche();
  }
 
 Symbole * Automate::dernierSymbole(){
