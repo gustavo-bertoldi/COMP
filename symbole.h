@@ -76,7 +76,7 @@ class Expr : public Symbole {
       Expr(int v) : Symbole(EXPR), valeur(v) { };
       ~Expr() { };
       int getValeur(){ return valeur;}
-      virtual void Affiche();
+      virtual void Affiche(){};
 
    protected:
       int valeur;
