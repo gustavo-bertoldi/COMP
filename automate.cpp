@@ -1,6 +1,35 @@
 #include "automate.h"
 #include <queue>
 #include <algorithm>
+#include <iostream>
+
+Automate::Automate(string chaine) {
+  flux = chaine;  
+  this->lexer = new Lexer(chaine);
+  Etat * depart = new E0();
+  etats.push(depart);
+}
+
+void Automate::evaluerChaine(){
+  bool prochainEtat = true;
+
+  while (prochainEtat) {
+    Symbole *s = lexer->Consulter();
+    lexer->Avancer();
+    prochainEtat = etats.top()->transition(*this, s);
+  }
+  if (*symboles.top() != ERREUR) {
+
+    Expr *  e = (Expr *)symboles.top();
+    int resultat = e->getValeur();
+    cout << "Syntaxe correct" << endl << "Résultat : " << resultat << endl;
+  } else {
+    cout << "Syntaxe non reconnu : caractere invalide" << endl;
+  }
+
+} 
+
+
 
 void Automate::decalage(Symbole *s, Etat *e) {
     symboles.push(s);

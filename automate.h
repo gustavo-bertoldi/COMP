@@ -10,8 +10,9 @@ using namespace std;
 class Automate {
 
    public:
-      Automate(string fl) : flux(fl) { };
-      virtual ~Automate();
+      Automate(string fl);
+      virtual ~Automate() {};
+      void evaluerChaine();
       void decalage(Symbole *s, Etat *e);
       void reduction(int n, Symbole *s);
       void enleverSymbole();
