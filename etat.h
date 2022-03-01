@@ -12,64 +12,85 @@ class Etat {
       Etat() {};
       virtual ~Etat() {};
       virtual bool transition(Automate &automate, Symbole * s) = 0;
+      virtual string print() = 0;
 };
 
 class E0 : public Etat{
     public:
-      virtual ~E0() {};
-      virtual bool transition(Automate & automate, Symbole * s);
+          E0() {};
+          virtual ~E0() {};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E0"; };
 };
 
 class E1 : public Etat{
     public:
-      virtual ~E1() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E1() {};
+          virtual ~E1(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E1"; };
 };
 
 class E2 : public Etat{
     public:
-      virtual ~E2() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E2() {};
+          virtual ~E2(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E2"; };
 };
 
 class E3 : public Etat{
     public:
-      virtual ~E3() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E3() {};
+          virtual ~E3(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E3"; };
 };
 
 class E4 : public Etat{
     public:
-      virtual ~E4() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E4() {};
+          virtual ~E4(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E4"; };
 };
 
 class E5 : public Etat{
     public:
-      virtual ~E5() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E5() {};
+          virtual ~E5(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E5"; };
 };
 
 class E6 : public Etat{
     public:
-      virtual ~E6() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E6() {};
+          virtual ~E6(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E6"; };
 };
 
 class E7 : public Etat{
     public:
-      virtual ~E7() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E7() {};
+          virtual ~E7(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E7"; };
 };
 
 class E8 : public Etat{
     public:
-      virtual ~E8() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E8() {};
+          virtual ~E8(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E8"; };
 };
 
 class E9 : public Etat{
     public:
-      virtual ~E9() {};
-      virtual bool transition(Automate & automate, Symbole * s); 
+          E9() {};
+          virtual ~E9(){};
+          virtual bool transition(Automate &automate, Symbole *s);
+          inline virtual string print() { return "E9"; };
 };

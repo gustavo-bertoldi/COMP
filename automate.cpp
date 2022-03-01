@@ -2,6 +2,7 @@
 #include <queue>
 #include <algorithm>
 #include <iostream>
+#include <deque>
 
 Automate::Automate(string chaine) {
   flux = chaine;  
@@ -38,6 +39,7 @@ void Automate::decalage(Symbole *s, Etat *e) {
     etats.push(e);
     cout<<"Decalage"<<endl;
     s->Affiche();
+    afficherPiles();
 }
 
 /*void Automate::reduction(int n, Symbole *s) {
@@ -73,7 +75,26 @@ void Automate::reduction(int n,Symbole * s) {
     cout<<"Reduction"<<endl;
     s->Affiche();
     lexer->Avancer();
+    afficherPiles();
  }
+
+void Automate::afficherPiles() {
+    stack<Symbole *> tmpSym(symboles);
+    stack<Etat *> tmpEt(etats);
+    cout << "Etats: [";
+    while (!tmpEt.empty())
+    {
+        cout << tmpEt.top()->print() << ", ";
+        tmpEt.pop();
+    }
+    cout << "]" << endl << "Symboles: [";
+    while (!tmpSym.empty())
+    {
+        cout << tmpSym.top()->getEtiquette() << ", ";
+        tmpSym.pop();
+    }
+    cout << "]" << endl;
+}
 
 Symbole * Automate::dernierSymbole(){
     return symboles.top();

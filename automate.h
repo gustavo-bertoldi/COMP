@@ -2,7 +2,6 @@
 
 #include <string>
 #include <stack>
-#include "symbole.h"
 #include "lexer.h"
 #include "etat.h"
 using namespace std;
@@ -18,6 +17,7 @@ class Automate {
       void enleverSymbole();
       Symbole * dernierSymbole();
       void lire();
+      void afficherPiles();
 
    protected:
       string flux;
