@@ -8,7 +8,7 @@ int main(void) {
    Lexer l(chaine);
 
    Symbole * s;
-   //Verifier Consulter() != ERREUR
+
    while( * (s = l.Consulter()) != FIN ) {
       s -> Affiche();
       cout << endl;

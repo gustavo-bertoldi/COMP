@@ -16,11 +16,13 @@ class Symbole {
 
    protected:
       int ident;
+      bool terminal;
 };
 
 class Entier : public Symbole {
    public:
       Entier(int v) : Symbole(INT), valeur(v) { }
+      int getValeur(){ return valeur;}
       ~Entier() { }
       virtual void Affiche();
    protected:
@@ -73,6 +75,7 @@ class Expr : public Symbole {
    public:
       Expr(int v) : Symbole(EXPR), valeur(v) { };
       ~Expr() { };
+      int getValeur(){ return valeur;}
       virtual void Affiche();
 
    protected:

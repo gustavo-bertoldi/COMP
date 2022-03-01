@@ -14,6 +14,8 @@ class Automate {
       virtual ~Automate();
       void decalage(Symbole *s, Etat *e);
       void reduction(int n, Symbole *s);
+      void enleverSymbole();
+      Symbole * dernierSymbole();
       void lire();
 
    protected:

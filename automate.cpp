@@ -7,7 +7,7 @@ void Automate::decalage(Symbole *s, Etat *e) {
     etats.push(e);
 }
 
-void Automate::reduction(int n, Symbole *s) {
+/*void Automate::reduction(int n, Symbole *s) {
     queue<Symbole *> evaluer;
 
     //Verifier la suppression des elements avec delete
@@ -29,4 +29,20 @@ void Automate::reduction(int n, Symbole *s) {
 
     symboles.push(new Symbole(EXPR));
     etats.top() -> transition(*this, s);
+}*/
+
+void Automate::reduction(int n,Symbole * s) {
+    for (int i=0;i<n;i++){
+        etats.pop();
+    }
+    //coloca a expressao calculada no topo da pilha
+    etats.top()->transition(*this,s);
+ }
+
+Symbole * Automate::dernierSymbole(){
+    return symboles.top();
+}
+
+void Automate::enleverSymbole(){
+    symboles.pop();
 }
