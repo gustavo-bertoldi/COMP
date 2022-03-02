@@ -1,14 +1,11 @@
-#include <iostream>
-#include "lexer.h"
+#include "symbole.h"
 #include "automate.h"
+#include <iostream>
 
+int main() {
+    string chaine("(1+1)");
+    auto aut = new Automate(chaine);
+    aut -> evaluerChaine();
 
-int main(void) {
-   string chaine("(1+1)");
-
-   Automate * a = new Automate(chaine);
-   a->evaluerChaine();
-
-   return 0;
+    return 0;
 }
-

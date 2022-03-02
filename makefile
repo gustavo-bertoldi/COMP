@@ -1,7 +1,7 @@
 #Compilateur
 CC = g++
 #Falgs du compilateur
-CCFLAGS = -Wall -pedantic -ansi -std=c++11 -DMAP -g
+CCFLAGS = -Wall -pedantic -ansi -std=c++17 -DMAP -g
 
 #Interfaces
 DEPS_H = $(wildcard *.h)

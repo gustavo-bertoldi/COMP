@@ -1,276 +1,231 @@
 #include "etat.h"
 #include "automate.h"
+#include <vector>
+#include <iostream>
 
+Etat::Etat(int nmr) : nmrEtat(nmr) {};
+Etat::Etat(const Etat &e) { nmrEtat = e.nmrEtat; };
+Etat::~Etat(){};
+const string Etat::toString() const { return "E" + to_string(nmrEtat); };
+ostream &operator<<(ostream &os, const Etat &e)
+{
+    return os << e.toString();
+}
 
-bool E0 :: transition(Automate & automate, Symbole * s) {
-    switch (*s){
+E0::E0() : Etat(0) {};
+E0::~E0() {};
+bool E0::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
         case EXPR:
-            automate.decalage(s,new E1);
+            aut.decalage(s, new E1());
             break;
         case OPENPAR:
-            automate.decalage(s,new E2);
-            break; 
+            aut.decalage(s, new E2());
+            break;
         case INT:
-            automate.decalage(s,new E3);
+            aut.decalage(s, new E3());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
     return false;
- }
+};
 
-bool E1 :: transition(Automate & automate, Symbole * s) {
-    switch (*s){
+E1::E1() : Etat(1) {};
+E1::~E1() {};
+bool E1::transition(Automate &aut, Symbole *s) const
+{
+    switch (*s) {
         case PLUS:
-            automate.decalage(s,new E4);
+            aut.decalage(s, new E4());
             break;
         case MULT:
-            automate.decalage(s,new E5);
+            aut.decalage(s, new E5());
             break;
         case FIN:
             return true;
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
     return false;
-}
+};
 
-bool E2 :: transition(Automate & automate, Symbole * s) {
-    switch (*s){
+E2::E2() : Etat(2) {};
+E2::~E2() {};
+bool E2::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
         case EXPR:
-            automate.decalage(s,new E6);
+            aut.decalage(s, new E6());
             break;
         case OPENPAR:
-            automate.decalage(s,new E2);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            automate.decalage(s,new E3);
+            aut.decalage(s, new E3());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
     return false;
-}
+};
 
-bool E3 :: transition(Automate & automate, Symbole * s) {
-    int val;
-    Expr* e = nullptr;
-    switch (*s){
+E3::E3() : Etat(3) {};
+E3::~E3() {};
+bool E3::transition(Automate &aut, Symbole *s) const {
+    cout << "E3" << endl;
+    switch (*s) {
         case CLOSEPAR:
-            e = (Expr *) automate.dernierSymbole(); 
-            val = e->getValeur();
-            automate.enleverSymbole();
-            automate.reduction(1,new Expr(val));
-            break; 
+            aut.reduction(1, new Closepar());
+            break;
         case PLUS:
-            e = (Expr *) automate.dernierSymbole(); 
-            val = e->getValeur();
-            automate.enleverSymbole();
-            automate.reduction(1,new Expr(val));
+            aut.reduction(1, new Plus());
             break;
         case MULT:
-            e = (Expr *) automate.dernierSymbole(); 
-            val = e->getValeur();
-            automate.enleverSymbole();
-            automate.reduction(1,new Expr(val));
+            aut.reduction(1, new Mult());
             break;
         case FIN:
-            e = (Expr *) automate.dernierSymbole(); 
-            val = e->getValeur();
-            automate.enleverSymbole();
-            automate.reduction(1,new Expr(val));
+            aut.reduction(1, new Fin());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
-    delete(e);
     return false;
-}
+};
 
-bool E4 :: transition(Automate & automate, Symbole * s) {
-    switch (*s){
+E4::E4() : Etat(4) {};
+E4::~E4() {};
+bool E4::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
         case EXPR:
-            automate.decalage(s,new E7);
+            aut.decalage(s, new E7());
             break;
         case OPENPAR:
-            automate.decalage(s,new E2);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            automate.decalage(s,new E3);
+            aut.decalage(s, new E3());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
     return false;
-}
+};
 
-bool E5 :: transition(Automate & automate, Symbole * s) {
-    switch (*s){
+E5::E5() : Etat(5) {};
+E5::~E5() {};
+bool E5::transition(Automate &aut, Symbole *s) const {
+    cout << "E5" << endl;
+    switch (*s) {
         case EXPR:
-            automate.decalage(s,new E8);
+            aut.decalage(s, new E8());
             break;
         case OPENPAR:
-            automate.decalage(s,new E2);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            automate.decalage(s,new E3);
+            aut.decalage(s, new E3());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
     return false;
-}
+};
 
-bool E6 :: transition(Automate & automate, Symbole * s) {
-    switch (*s){
+E6::E6() : Etat(6) {};
+E6::~E6() {};
+bool E6::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
         case CLOSEPAR:
-            automate.decalage(s,new E9);
+            aut.decalage(s, new E9());
             break;
         case PLUS:
-            automate.decalage(s,new E4);
+            aut.decalage(s, new E4());
             break;
         case MULT:
-            automate.decalage(s,new E5);
+            aut.decalage(s, new E5());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
     return false;
-}
+};
 
-bool E7 :: transition(Automate & automate, Symbole * s) {
-    Expr * s1 = nullptr;
-    Expr * s2 = nullptr;
-    int val;
-    switch (*s){
+E7::E7() : Etat(7) {};
+E7::~E7() {};
+bool E7::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
         case CLOSEPAR:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() + s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Closepar());
             break;
         case PLUS:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() + s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Plus());
+            break;
+        case FIN:
+            aut.reduction(3, new Fin());
             break;
         case MULT:
-            automate.decalage(s,new E5);
+            aut.decalage(s, new E5());
             break;
         case INT:
-        case FIN:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() + s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.decalage(s, new E3());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
-    delete(s1);
-    delete(s2);
     return false;
-}
+};
 
-bool E8 :: transition(Automate & automate, Symbole * s) {
-    Expr * s1 = nullptr;
-    Expr * s2 = nullptr;
-    int val;
-    switch (*s){
+E8::E8() : Etat(8) {};
+E8::~E8() {};
+bool E8::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
         case CLOSEPAR:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() * s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Closepar());
             break;
         case PLUS:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() * s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Plus());
             break;
         case MULT:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() * s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Mult());
             break;
         case FIN:
-            s1 = (Expr*) automate.dernierSymbole(); 
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            s2 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur() * s2->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Fin());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
-    delete(s1);
-    delete(s2);
     return false;
-}
+};
 
-bool E9 :: transition(Automate & automate, Symbole * s) {
-    Expr * s1 = nullptr;
-    int val;
-    switch (*s){
-        case CLOSEPAR: 
-            automate.enleverSymbole();
-            s1 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur();
-            automate.reduction(3,new Expr(val));
+E9::E9() : Etat(9) {};
+E9::~E9() {};
+bool E9::transition(Automate &aut, Symbole *s) const {
+    switch (*s) {
+        case CLOSEPAR:
+            aut.reduction(3, new Closepar());
             break;
         case PLUS:
-            automate.enleverSymbole();
-            s1 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Plus());
             break;
         case MULT:
-            automate.enleverSymbole();
-            s1 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Mult());
             break;
         case FIN:
-            automate.enleverSymbole();
-            s1 = (Expr*) automate.dernierSymbole();
-            automate.enleverSymbole();
-            automate.enleverSymbole();
-            val = s1->getValeur();
-            automate.reduction(3,new Expr(val));
+            aut.reduction(3, new Fin());
             break;
         default:
+            aut.decalage(new Erreur(), nullptr);
             break;
     }
-    delete(s1);
     return false;
-}
+};
