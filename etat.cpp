@@ -11,21 +11,19 @@ ostream &operator<<(ostream &os, const Etat &e)
 {
     return os << e.toString();
 }
-static Etat* etats[] = {new E0(), new E1(), new E2(), new E3(), new E4(),
-    new E5(), new E6(), new E7(), new E8(), new E9() };
 
 E0::E0() : Etat(0) {};
 E0::~E0() {};
 bool E0::transition(Automate &aut, Symbole *s) const {
     switch (*s) {
         case EXPR:
-            aut.decalage(s, etats[1]);
+            aut.decalage(s, new E1());
             break;
         case OPENPAR:
-            aut.decalage(s, etats[2]);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            aut.decalage(s, etats[3]);
+            aut.decalage(s, new E3());
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
@@ -40,10 +38,10 @@ bool E1::transition(Automate &aut, Symbole *s) const
 {
     switch (*s) {
         case PLUS:
-            aut.decalage(s, etats[4]);
+            aut.decalage(s, new E4());
             break;
         case MULT:
-            aut.decalage(s, etats[5]);
+            aut.decalage(s, new E5());
             break;
         case FIN:
             return true;
@@ -59,13 +57,13 @@ E2::~E2() {};
 bool E2::transition(Automate &aut, Symbole *s) const {
     switch (*s) {
         case EXPR:
-            aut.decalage(s, etats[6]);
+            aut.decalage(s, new E6());
             break;
         case OPENPAR:
-            aut.decalage(s, etats[2]);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            aut.decalage(s, etats[3]);
+            aut.decalage(s, new E3());
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
@@ -103,13 +101,13 @@ E4::~E4() {};
 bool E4::transition(Automate &aut, Symbole *s) const {
     switch (*s) {
         case EXPR:
-            aut.decalage(s, etats[7]);
+            aut.decalage(s, new E7());
             break;
         case OPENPAR:
-            aut.decalage(s, etats[2]);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            aut.decalage(s, etats[3]);
+            aut.decalage(s, new E3());
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
@@ -123,13 +121,13 @@ E5::~E5() {};
 bool E5::transition(Automate &aut, Symbole *s) const {
     switch (*s) {
         case EXPR:
-            aut.decalage(s, etats[8]);
+            aut.decalage(s, new E8());
             break;
         case OPENPAR:
-            aut.decalage(s, etats[2]);
+            aut.decalage(s, new E2());
             break;
         case INT:
-            aut.decalage(s, etats[3]);
+            aut.decalage(s, new E3());
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
@@ -143,13 +141,13 @@ E6::~E6() {};
 bool E6::transition(Automate &aut, Symbole *s) const {
     switch (*s) {
         case CLOSEPAR:
-            aut.decalage(s, etats[9]);
+            aut.decalage(s, new E9());
             break;
         case PLUS:
-            aut.decalage(s, etats[4]);
+            aut.decalage(s, new E4());
             break;
         case MULT:
-            aut.decalage(s, etats[5]);
+            aut.decalage(s, new E5());
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
@@ -175,10 +173,10 @@ bool E7::transition(Automate &aut, Symbole *s) const {
             delete s;
             break;
         case MULT:
-            aut.decalage(s, etats[5]);
+            aut.decalage(s, new E5());
             break;
         case INT:
-            aut.decalage(s, etats[3]);
+            aut.decalage(s, new E3());
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
