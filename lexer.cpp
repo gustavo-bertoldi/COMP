@@ -69,6 +69,5 @@ void Lexer::putSymbol(Symbole *s) {
 
 void Lexer::Avancer()
 {
-    delete tampon;
     tampon = nullptr;
 }
