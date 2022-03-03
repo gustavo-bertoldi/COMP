@@ -10,8 +10,12 @@ Automate::Automate(string entree) : flux(entree) {
 
 Automate::~Automate() {
     delete lexer;
-    etats.clear();
-    symboles.clear();
+    for (Etat* e : etats) {
+        delete e;
+    }
+    for (Symbole *s: symboles) {
+        delete s;
+    }
 };
 
 void Automate::evaluerChaine() {
