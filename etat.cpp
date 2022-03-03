@@ -45,7 +45,6 @@ bool E1::transition(Automate &aut, Symbole *s) const
             break;
         case FIN:
             return true;
-            break;
         default:
             aut.decalage(new Erreur(), nullptr);
             break;
@@ -76,7 +75,6 @@ bool E2::transition(Automate &aut, Symbole *s) const {
 E3::E3() : Etat(3) {};
 E3::~E3() {};
 bool E3::transition(Automate &aut, Symbole *s) const {
-    cout << "E3" << endl;
     switch (*s) {
         case CLOSEPAR:
             aut.reduction(1, new Closepar());
@@ -120,7 +118,6 @@ bool E4::transition(Automate &aut, Symbole *s) const {
 E5::E5() : Etat(5) {};
 E5::~E5() {};
 bool E5::transition(Automate &aut, Symbole *s) const {
-    cout << "E5" << endl;
     switch (*s) {
         case EXPR:
             aut.decalage(s, new E8());

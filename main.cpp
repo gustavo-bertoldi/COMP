@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main() {
-    string chaine("(1+1)");
+    string chaine("(3+2)*5*(1+4)");
     auto aut = new Automate(chaine);
     aut -> evaluerChaine();
 

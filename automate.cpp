@@ -11,10 +11,11 @@ Automate::Automate(string entree) : flux(entree) {
 Automate::~Automate() {};
 
 void Automate::evaluerChaine() {
-    Symbole *s = nullptr;
-    while (*(s = lexer -> Consulter()) != FIN) {
+    bool fini = false;
+    while (!fini) {
+        Symbole *s = lexer -> Consulter();
         lexer -> Avancer();
-        etats.back() -> transition(*this, s);
+        fini = etats.back()->transition(*this, s);
     }
 
     if (*symboles.back() != ERREUR) {
@@ -39,7 +40,7 @@ void Automate::reduction(int n, Symbole *s) {
         symboles.pop_back();
     }
     afficherPiles();
-    
+
     int val = -1;
     if (n == 1) {
         val = ((Int *)(red -> back())) -> getValeur();
@@ -49,9 +50,9 @@ void Automate::reduction(int n, Symbole *s) {
             val = ((Expr *)(red -> at(1)))->getValeur();
         } else {
             //Cas E+E || E*E
-            int val1 = ((Expr *)(red->at(0)))->getValeur();
-            int val2 = ((Expr *)(red->at(2)))->getValeur();
-            if (*(red -> back()) == PLUS) {
+            int val1 = ((Expr *)(red->at(2)))->getValeur();
+            int val2 = ((Expr *)(red->at(0)))->getValeur();
+            if (*(red -> at(1)) == PLUS) {
                 //Cas E+E
                 val = val1 + val2;
             } else {
