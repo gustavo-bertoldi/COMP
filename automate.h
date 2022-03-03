@@ -18,14 +18,11 @@ class Automate {
         void reduction(int n, Symbole *s);
         void enleverSymbole();
         const Symbole& dernierSymbole() const;
-        //void lire();
         void afficherPiles() const;
-        vector<Symbole *> * getSymbolesReduction() const;
 
     protected:
         string flux;
-        stack<Symbole *> symboles;
-        stack<Etat *> etats;
-        vector<Symbole *> *symbolesReduction;
+        vector<Symbole *> symboles;
+        vector<Etat *> etats;
         Lexer *lexer;
 };

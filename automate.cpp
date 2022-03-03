@@ -4,7 +4,8 @@
 
 Automate::Automate(string entree) : flux(entree) {
     lexer = new Lexer(flux);
-    etats.push(new E0());
+    etats.push_back(new E0());
+    afficherPiles();
 }
 
 Automate::~Automate() {};
@@ -13,11 +14,11 @@ void Automate::evaluerChaine() {
     Symbole *s = nullptr;
     while (*(s = lexer -> Consulter()) != FIN) {
         lexer -> Avancer();
-        etats.top() -> transition(*this, s);
+        etats.back() -> transition(*this, s);
     }
 
-    if (*symboles.top() != ERREUR) {
-        Expr *e = (Expr *)symboles.top();
+    if (*symboles.back() != ERREUR) {
+        Expr *e = (Expr *)symboles.back();
         cout << "Resultat : " << e -> getValeur() << endl;
     } else {
         cout << "Syntaxe inconnue" << endl;
@@ -25,70 +26,60 @@ void Automate::evaluerChaine() {
 }
 
 void Automate::decalage(Symbole *s, Etat *e) {
-    symboles.push(s);
-    etats.push(e);
+    symboles.push_back(s);
+    etats.push_back(e);
     afficherPiles();
 }
 
 void Automate::reduction(int n, Symbole *s) {
-    cout << "Reduction" << endl;
-    stack<Symbole *> *red = new stack<Symbole *>();
+    vector<Symbole *> *red = new vector<Symbole *>();
     for (int i = 0; i < n; i++) {
-        etats.pop();
-        red -> push(symboles.top());
-        symboles.pop();
+        etats.pop_back();
+        red -> push_back(symboles.back());
+        symboles.pop_back();
     }
-
+    afficherPiles();
+    
     int val = -1;
     if (n == 1) {
-        val = ((Int *)(red -> top())) -> getValeur();
+        val = ((Int *)(red -> back())) -> getValeur();
     } else if (n == 3) {
-        if (*(red -> top()) == OPENPAR) {
+        if (*(red -> back()) == OPENPAR) {
             //Cas (E)
-            red -> pop();
-            val = ((Expr *)(red->top()))->getValeur();
+            val = ((Expr *)(red -> at(1)))->getValeur();
         } else {
             //Cas E+E || E*E
-            int val1 = ((Expr *)(red->top()))->getValeur();
-            red -> pop();
-            if (*(red -> top()) == PLUS) {
+            int val1 = ((Expr *)(red->at(0)))->getValeur();
+            int val2 = ((Expr *)(red->at(2)))->getValeur();
+            if (*(red -> back()) == PLUS) {
                 //Cas E+E
-                red->pop();
-                val = val1 + ((Expr *)(red->top()))->getValeur();
+                val = val1 + val2;
             } else {
                 //Cas E*E
-                red->pop();
-                val = val1 * ((Expr *)(red->top()))->getValeur();
+                val = val1 * val2;
             }
         }
     }
-    afficherPiles();
-    etats.top()->transition(*this, new Expr(val));
     lexer->putSymbol(s);
+    etats.back()->transition(*this, new Expr(val));
+    
 }
 
-const Symbole& Automate::dernierSymbole() const { return *symboles.top(); };
-vector<Symbole *> * Automate::getSymbolesReduction() const {
-     return symbolesReduction; 
-};
+const Symbole& Automate::dernierSymbole() const { return *symboles.back(); };
 
 void Automate::afficherPiles() const {
-    stack<Symbole *> *tmpSym = new stack<Symbole *>(symboles);
-    stack<Etat *> *tmpEt = new stack<Etat *>(etats);
 
     cout << "============" << endl << "Pile symboles: ";
-    for (int i = 0; i < symboles.size(); i++) {
-        cout << *(tmpSym -> top()) << ", ";
-        tmpSym -> pop();
+    for (Symbole *s : symboles) {
+        cout << *s;
+        if (s != symboles.back()) cout << ", ";
     }
+
     cout << endl << "Pile etats: ";
-    for (int i = 0; i < etats.size(); i++)
+    for (Etat *e : etats)
     {
-        cout << *(tmpEt->top()) << ", ";
-        tmpEt->pop();
+        cout << *e;
+        if (e != etats.back()) cout << ", ";
     }
     cout << endl << "============" << endl;
-
-    delete tmpSym;
-    delete tmpEt;
 }
