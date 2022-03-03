@@ -17,10 +17,12 @@ class Automate {
         void decalage(Symbole *s, Etat *e);
         void reduction(int n, Symbole *s);
         void afficherPiles() const;
+        void setVerbose(bool v);
 
     protected:
         string flux;
         vector<Symbole *> symboles;
         vector<Etat *> etats;
         Lexer *lexer;
+        bool verbose;
 };

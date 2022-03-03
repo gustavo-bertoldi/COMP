@@ -4,7 +4,6 @@ Symbole *Lexer::Consulter()
 {
     if (!tampon)
     {
-
         // Init
         // tete = 0
         // flux - input

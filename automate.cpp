@@ -1,8 +1,15 @@
 #include "automate.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
-Automate::Automate(string entree) : flux(entree) {
+Automate::Automate(string entree) : verbose(false) {
+    //Enleve les espaces de l'entrée
+    string entreeFiltree = "";
+    for (const char &c : entree) {
+        if (c != ' ') entreeFiltree += c;
+    }
+    flux = entreeFiltree;
     lexer = new Lexer(flux);
     etats.push_back(new E0());
     afficherPiles();
@@ -75,18 +82,25 @@ void Automate::reduction(int n, Symbole *s) {
 }
 
 void Automate::afficherPiles() const {
+    if (verbose) {
+        cout << "============" << endl << "Pile symboles: ";
+        for (Symbole *s : symboles) {
+            if (s) {
+                cout << *s;
+                if (s != symboles.back()) cout << ", ";
+            }
+        }
 
-    cout << "============" << endl << "Pile symboles: ";
-    for (Symbole *s : symboles) {
-        cout << *s;
-        if (s != symboles.back()) cout << ", ";
+        cout << endl << "Pile etats: ";
+        for (Etat *e : etats)
+        {
+            if (e) {
+                cout << *e;
+                if (e != etats.back()) cout << ", ";
+            }
+        }
+        cout << endl << "============" << endl;
     }
-
-    cout << endl << "Pile etats: ";
-    for (Etat *e : etats)
-    {
-        cout << *e;
-        if (e != etats.back()) cout << ", ";
-    }
-    cout << endl << "============" << endl;
 }
+
+void Automate::setVerbose(bool v) { verbose = v; };

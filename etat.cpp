@@ -27,7 +27,7 @@ bool E0::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     return false;
 };
@@ -47,7 +47,7 @@ bool E1::transition(Automate &aut, Symbole *s) const
             return true;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     return false;
 };
@@ -67,7 +67,7 @@ bool E2::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     return false;
 };
@@ -90,7 +90,7 @@ bool E3::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     delete s;
     return false;
@@ -111,7 +111,7 @@ bool E4::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     return false;
 };
@@ -131,7 +131,7 @@ bool E5::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     return false;
 };
@@ -151,7 +151,7 @@ bool E6::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     return false;
 };
@@ -181,7 +181,7 @@ bool E7::transition(Automate &aut, Symbole *s) const {
         default:
             aut.decalage(new Erreur(), nullptr);
             delete s;
-            break;
+            return true;
     }
     return false;
 };
@@ -204,7 +204,7 @@ bool E8::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     delete s;
     return false;
@@ -228,7 +228,7 @@ bool E9::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
-            break;
+            return true;
     }
     delete s;
     return false;
