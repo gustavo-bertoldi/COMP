@@ -92,6 +92,7 @@ bool E3::transition(Automate &aut, Symbole *s) const {
             aut.decalage(new Erreur(), nullptr);
             break;
     }
+    delete s;
     return false;
 };
 
@@ -161,12 +162,15 @@ bool E7::transition(Automate &aut, Symbole *s) const {
     switch (*s) {
         case CLOSEPAR:
             aut.reduction(3, new Closepar());
+            delete s;
             break;
         case PLUS:
             aut.reduction(3, new Plus());
+            delete s;
             break;
         case FIN:
             aut.reduction(3, new Fin());
+            delete s;
             break;
         case MULT:
             aut.decalage(s, new E5());
@@ -176,6 +180,7 @@ bool E7::transition(Automate &aut, Symbole *s) const {
             break;
         default:
             aut.decalage(new Erreur(), nullptr);
+            delete s;
             break;
     }
     return false;
@@ -201,6 +206,7 @@ bool E8::transition(Automate &aut, Symbole *s) const {
             aut.decalage(new Erreur(), nullptr);
             break;
     }
+    delete s;
     return false;
 };
 
@@ -224,5 +230,6 @@ bool E9::transition(Automate &aut, Symbole *s) const {
             aut.decalage(new Erreur(), nullptr);
             break;
     }
+    delete s;
     return false;
 };
