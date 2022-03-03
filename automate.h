@@ -16,8 +16,6 @@ class Automate {
         void evaluerChaine();
         void decalage(Symbole *s, Etat *e);
         void reduction(int n, Symbole *s);
-        void enleverSymbole();
-        const Symbole& dernierSymbole() const;
         void afficherPiles() const;
 
     protected:

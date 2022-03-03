@@ -8,7 +8,11 @@ Automate::Automate(string entree) : flux(entree) {
     afficherPiles();
 }
 
-Automate::~Automate() {};
+Automate::~Automate() {
+    delete lexer;
+    etats.clear();
+    symboles.clear();
+};
 
 void Automate::evaluerChaine() {
     bool fini = false;
@@ -65,8 +69,6 @@ void Automate::reduction(int n, Symbole *s) {
     etats.back()->transition(*this, new Expr(val));
     
 }
-
-const Symbole& Automate::dernierSymbole() const { return *symboles.back(); };
 
 void Automate::afficherPiles() const {
 
