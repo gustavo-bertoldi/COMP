@@ -6,6 +6,6 @@ int main() {
     string chaine("(3+2)*5*(1+4)");
     auto aut = new Automate(chaine);
     aut -> evaluerChaine();
-
+    delete aut;
     return 0;
 }
