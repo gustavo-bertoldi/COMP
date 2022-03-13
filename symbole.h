@@ -1,86 +1,82 @@
 #pragma once
-#include <iostream>
+
 #include <string>
+
 using namespace std;
 
-enum Identificateurs { OPENPAR, CLOSEPAR, PLUS, MULT, INT, FIN, ERREUR, EXPR };
-
-const string Etiquettes[] = { "OPENPAR", "CLOSEPAR", "PLUS", "MULT", "INT", "FIN", "ERREUR", "EXPR" };
+enum identificateurs { OPENPAR, CLOSEPAR, PLUS, MULT, INT, FIN, ERREUR, EXPR };
+const static string etiquettes[] = { "(", ")", "+", "*", "int", "fin",
+    "ERREUR", "EXP" };
 
 class Symbole {
-   public:
-      Symbole(int i) : ident(i) {  }
-      virtual ~Symbole() { }
-      operator int() const { return ident; }
-      virtual void Affiche();
-      inline string getEtiquette() { return Etiquettes[ident]; };
+    public:
+        Symbole(int i);
+        Symbole(const Symbole &s);
+        virtual ~Symbole();
+        operator int() const;
+        friend ostream &operator<<(ostream &os, const Symbole &s);
 
-   protected:
-      int ident;
-      bool terminal;
-};
-
-class Entier : public Symbole {
-   public:
-      Entier(int v) : Symbole(INT), valeur(v) { }
-      int getValeur(){ return valeur;}
-      ~Entier() { }
-      virtual void Affiche();
-   protected:
-      int valeur;
+    protected:
+        int id;
+        virtual const string toString() const;
 };
 
 class Openpar : public Symbole {
     public:
-      Openpar() : Symbole(OPENPAR) { };
-      ~Openpar() { };
-      virtual void Affiche();
+        Openpar();
+        virtual ~Openpar();
 };
 
 class Closepar : public Symbole {
     public:
-      Closepar() : Symbole(CLOSEPAR) { };
-      ~Closepar() { };
-      virtual void Affiche();
+        Closepar();
+        virtual ~Closepar();
 };
 
 class Plus : public Symbole {
     public:
-      Plus() : Symbole(PLUS) { };
-      ~Plus() { };
-      virtual void Affiche();
+        Plus();
+        virtual ~Plus();
 };
 
 class Mult : public Symbole {
     public:
-      Mult() : Symbole(MULT) { };
-      ~Mult() { };
-      virtual void Affiche();
+        Mult();
+        virtual ~Mult();
+};
+
+class Int : public Symbole {
+    public:
+        Int(int val);
+        virtual ~Int();
+        int getValeur() const;
+    
+    protected:
+        int valeur;
+        virtual const string toString() const;
 };
 
 class Fin : public Symbole {
     public:
-      Fin() : Symbole(FIN) { };
-      ~Fin() { };
-      virtual void Affiche();
+        Fin();
+        virtual ~Fin();
 };
 
 class Erreur : public Symbole {
     public:
-      Erreur() : Symbole(ERREUR) { };
-      ~Erreur() { };
-      virtual void Affiche();
+        Erreur();
+        virtual ~Erreur();
 };
 
 class Expr : public Symbole {
-   public:
-      Expr(int v) : Symbole(EXPR), valeur(v) { };
-      ~Expr() { };
-      virtual void Affiche(){
-         cout<<"Expr = "<< valeur<< endl;
-      };
-      int getValeur(){ return valeur;}
-      
-   protected:
-      int valeur;
+    public:
+        Expr();
+        Expr(int valeur);
+        Expr(const Expr &s);
+        virtual ~Expr();
+        int getValeur() const;
+
+    protected:
+        int valeur;
+        virtual const string toString() const;
 };

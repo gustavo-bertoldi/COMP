@@ -1,105 +1,106 @@
 #include "automate.h"
-#include <queue>
-#include <algorithm>
 #include <iostream>
-#include <deque>
+#include <vector>
+#include <algorithm>
 
-Automate::Automate(string chaine) {
-  flux = chaine;  
-  this->lexer = new Lexer(chaine);
-  Etat * depart = new E0();
-  etats.push(depart);
+Automate::Automate(string entree) : verbose(false) {
+    //Enleve les espaces de l'entrée
+    string entreeFiltree = "";
+    for (const char &c : entree) {
+        if (c != ' ') entreeFiltree += c;
+    }
+    flux = entreeFiltree;
+    lexer = new Lexer(flux);
+    etats.push_back(new E0());
+    afficherPiles();
 }
 
-void Automate::evaluerChaine(){
-  Symbole * s = nullptr;
+Automate::~Automate() {
+    delete lexer;
+    for (Etat* e : etats) {
+        delete e;
+    }
+    for (Symbole *s: symboles) {
+        delete s;
+    }
+};
 
-  while( * (s = lexer->Consulter()) != FIN ) {
-      //s -> Affiche();
-      cout << endl;
-      lexer->Avancer();
-      etats.top()->transition(*this, s);
+void Automate::evaluerChaine() {
+    bool fini = false;
+    while (!fini) {
+        Symbole *s = lexer -> Consulter();
+        lexer -> Avancer();
+        fini = etats.back()->transition(*this, s);
+    }
 
-   }
-
-  if (*symboles.top() != ERREUR) {
-    Expr *  e = (Expr *)symboles.top();
-    int resultat = e->getValeur();
-    cout << "Syntaxe correct" << endl << "Résultat : " << resultat << endl;
-  } else {
-    cout << "Syntaxe non reconnu : caractere invalide" << endl;
-  }
-
-} 
-
-
+    if (*symboles.back() != ERREUR) {
+        Expr *e = (Expr *)symboles.back();
+        cout << "Resultat : " << e -> getValeur() << endl;
+    } else {
+        cout << "Syntaxe inconnue" << endl;
+    }
+}
 
 void Automate::decalage(Symbole *s, Etat *e) {
-    symboles.push(s);
-    etats.push(e);
-    cout<<"Decalage"<<endl;
-    s->Affiche();
+    symboles.push_back(s);
+    etats.push_back(e);
     afficherPiles();
 }
 
-/*void Automate::reduction(int n, Symbole *s) {
-    queue<Symbole *> evaluer;
-
-    //Verifier la suppression des elements avec delete
+void Automate::reduction(int n, Symbole *s) {
+    vector<Symbole *> *red = new vector<Symbole *>();
     for (int i = 0; i < n; i++) {
-        evaluer.push(symboles.top());
-        symboles.pop();
-        etats.pop();
+        etats.pop_back();
+        red -> push_back(symboles.back());
+        symboles.pop_back();
     }
-
-    Symbole * val;
-    if (n == 1) {
-        val = evaluer.back();
-    }
-
-    while (!evaluer.empty()) {
-        Symbole * courant = evaluer.front();
-
-    }
-
-    symboles.push(new Symbole(EXPR));
-    etats.top() -> transition(*this, s);
-}*/
-
-void Automate::reduction(int n,Symbole * s) {
-    for (int i=0;i<n;i++){
-        etats.pop();
-    }
-    //coloca a expressao calculada no topo da pilha
-    etats.top()->transition(*this,s);
-    cout<<"Reduction"<<endl;
-    s->Affiche();
-    lexer->Avancer();
     afficherPiles();
- }
 
-void Automate::afficherPiles() {
-    stack<Symbole *> tmpSym(symboles);
-    stack<Etat *> tmpEt(etats);
-    cout << "Etats: [";
-    while (!tmpEt.empty())
-    {
-        cout << tmpEt.top()->print() << ", ";
-        tmpEt.pop();
+    int val = -1;
+    if (n == 1) {
+        val = ((Int *)(red -> back())) -> getValeur();
+    } else if (n == 3) {
+        if (*(red -> back()) == OPENPAR) {
+            //Cas (E)
+            val = ((Expr *)(red -> at(1)))->getValeur();
+        } else {
+            //Cas E+E || E*E
+            int val1 = ((Expr *)(red->at(2)))->getValeur();
+            int val2 = ((Expr *)(red->at(0)))->getValeur();
+            if (*(red -> at(1)) == PLUS) {
+                //Cas E+E
+                val = val1 + val2;
+            } else {
+                //Cas E*E
+                val = val1 * val2;
+            }
+        }
     }
-    cout << "]" << endl << "Symboles: [";
-    while (!tmpSym.empty())
-    {
-        cout << tmpSym.top()->getEtiquette() << ", ";
-        tmpSym.pop();
+    lexer->putSymbol(s);
+    etats.back()->transition(*this, new Expr(val));
+    
+}
+
+void Automate::afficherPiles() const {
+    if (verbose) {
+        cout << "============" << endl << "Pile symboles: ";
+        for (Symbole *s : symboles) {
+            if (s) {
+                cout << *s;
+                if (s != symboles.back()) cout << ", ";
+            }
+        }
+
+        cout << endl << "Pile etats: ";
+        for (Etat *e : etats)
+        {
+            if (e) {
+                cout << *e;
+                if (e != etats.back()) cout << ", ";
+            }
+        }
+        cout << endl << "============" << endl;
     }
-    cout << "]" << endl;
 }
 
-Symbole * Automate::dernierSymbole(){
-    return symboles.top();
-}
-
-void Automate::enleverSymbole(){
-    symboles.pop();
-}
+void Automate::setVerbose(bool v) { verbose = v; };

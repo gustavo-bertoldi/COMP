@@ -1,8 +1,12 @@
 #Compilateur
 CC = g++
 #Falgs du compilateur
-CCFLAGS = -Wall -pedantic -ansi -std=c++11 -DMAP -g
+CCFLAGS = -Wall -std=c++17 -g
 
+#Localisation des fichiers source
+SOURCE = ./src
+#Localization des fichiers binaires
+BIN = ./bin
 #Interfaces
 DEPS_H = $(wildcard *.h)
 #Fichiers de réalisation
@@ -19,6 +23,10 @@ $(EXE) : $(OBJS)
 %.o : %.cpp $(DEPS_H)
 	@echo ">>> Compilation de <$<>"
 	$(CC) $(CCFLAGS) -c $<
+
+cleanbin:
+	@echo "Netoyage des binaires"
+	@rm -f $(OBJS)
 
 clean:
 	@echo "Netoyage des binaires et executables"
